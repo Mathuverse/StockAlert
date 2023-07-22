@@ -1,7 +1,7 @@
 import requests
 import datetime
 import smtplib
-
+#Welcome
 #All the variables and constants
 MY_EMAIL="Mathudeals@gmail.com"
 MY_PASS="ngzjeqhpuqfwbqja"
