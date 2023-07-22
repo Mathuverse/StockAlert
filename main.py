@@ -1,4 +1,13 @@
 import requests
+import datetime
+
+yesturday_date = datetime.datetime.now() - datetime.timedelta(days=1)
+yesturday_date = str(yesturday_date).split(" ")
+yesturday_date = yesturday_date[0]
+
+before_yesturday_date = datetime.datetime.now() - datetime.timedelta(days=2)
+before_yesturday_date = str(before_yesturday_date).split(" ")
+before_yesturday_date = before_yesturday_date[0]
 
 STOCK_NAME = "TSLA"
 COMPANY_NAME = "Tesla Inc"
@@ -31,17 +40,28 @@ print(yesturday)
 print(before_yesturday)
 percentage = round((difference / yesturday) * 100,1)
 print(percentage)
+print(dic_time)
+print(yesturday_date)
+print(before_yesturday_date)
 #TODO 5. - If TODO4 percentage is greater than 5 then print("Get News").
-if percentage > 5:
+if percentage > 0:
     print("Get News")
-    # response_news = requests.get(url = )
-    ## STEP 2: https://newsapi.org/ 
-    # Instead of printing ("Get News"), actually get the first 3 news pieces for the COMPANY_NAME. 
+    params = {
+        "q":COMPANY_NAME,
+        "from": yesturday_date,
+        "sortBy": "publishedAt",
+        "apikey": MY_API_NEWS,
 
-#TODO 6. - Instead of printing ("Get News"), use the News API to get articles related to the COMPANY_NAME.
-
-#TODO 7. - Use Python slice operator to create a list that contains the first 3 articles. Hint: https://stackoverflow.com/questions/509211/understanding-slice-notation
-
+    }
+    response_news = requests.get(url = "https://newsapi.org/v2/everything",params=params)
+    ## STEP 2: https://newsapi.org/
+    news_dic = response_news.json()
+    # Instead of printing ("Get News"), actually get the first 3 news pieces for the COMPANY_NAME.
+    list_news = [value for (key,value) in news_dic.items()]
+    top_news = []
+    for _ in range(3):
+        top_news.append(list_news[2][_])
+        print(top_news[_])
 
     ## STEP 3: Use twilio.com/docs/sms/quickstart/python
     #to send a separate message with each article's title and description to your phone number. 
